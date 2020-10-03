@@ -7,10 +7,10 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// create type of contextKey for key context
-type (
-	contextKey uint
-)
+// // create type of contextKey for key context
+// type (
+// 	contextKey uint
+// )
 
 // cons db
 var (
