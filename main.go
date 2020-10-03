@@ -17,13 +17,14 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/juju/ratelimit"
 	"gorm.io/gorm"
 )
 
 func main() {
 	errChan := make(chan error, 1) // buffered channel
 	dbChan := make(chan *gorm.DB)
-	// bucketChan := make(chan *ratelimit.Bucket)
+	bucketChan := make(chan *ratelimit.Bucket)
 	emailChan := make(chan utils.Email)
 	redisChan := make(chan *redis.Client)
 	elasticlientChan := make(chan *elasticsearch.Client)
@@ -60,27 +61,11 @@ func main() {
 		fmt.Println("Close goroutine database")
 	}()
 
-	// set up redis cache
-	go func() {
-		redisChan <- config.NewRedis()
-		fmt.Println("Close goroutine redis")
-	}()
-
-	// set up elasticsearch
-	go func() {
-		elasticlient, err := config.NewElasticsearch()
-		if err != nil {
-			errChan <- err
-		}
-		elasticlientChan <- elasticlient
-		fmt.Println("Close goroutine elasticsearch	")
-	}()
-
 	// set up rate limiter configuration
-	// go func() {
-	// 	bucketChan <- config.NewRateLimit()
-	// 	fmt.Println("Close goroutine rate limiter")
-	// }()
+	go func() {
+		bucketChan <- config.NewRateLimit()
+		fmt.Println("Close goroutine rate limiter")
+	}()
 
 	// set up email configuration and email util
 	go func() {
