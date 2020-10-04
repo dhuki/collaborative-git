@@ -30,9 +30,9 @@ func NewDatabase() (*gorm.DB, error) {
 	}
 
 	// checking if connection to db is still alive
-	if err := sqlDB.Ping(); err != nil {
-		return nil, err
-	}
+	// if err := sqlDB.Ping(); err != nil {
+	// 	return nil, err
+	// }
 
 	// Set maxActive (maximum number of active/connection (in-use or idle) ) that available in pool
 	// if all connection already in-use (in this case 10 connection in-use) and need new connection
