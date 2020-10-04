@@ -3,7 +3,6 @@ package config
 import (
 	"database/sql"
 	"fmt"
-	"time"
 
 	"github.com/dhuki/rest-template/common"
 	"gorm.io/driver/postgres"
@@ -51,7 +50,7 @@ func NewDatabase() (*gorm.DB, error) {
 	// if idle connection has been reached max lifetime it'll destroy connection
 	// but otherwise if connection is in use it'll wait until connection back again to the
 	// pool and then destory it.
-	sqlDB.SetConnMaxLifetime(10 * time.Minute)
+	// sqlDB.SetConnMaxLifetime(10 * time.Minute)
 
 	return db, nil
 }
