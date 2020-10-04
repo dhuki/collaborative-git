@@ -24,10 +24,10 @@ func NewDatabase() (*gorm.DB, error) {
 	// disable auto logging from gorm lib v1
 	// db.LogMode(false)
 
-	sqlDB, err := db.DB()
-	if err != nil {
-		return nil, err
-	}
+	// sqlDB, err := db.DB()
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	// checking if connection to db is still alive
 	// if err := sqlDB.Ping(); err != nil {
